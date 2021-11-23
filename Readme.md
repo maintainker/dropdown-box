@@ -1,5 +1,5 @@
 # Just Little Project
 
-## dropdown
+## drag & drop
 
-- for dropdown using only Web apis.
+- for drag & drop using only Web apis.
