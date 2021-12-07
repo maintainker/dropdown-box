@@ -1,0 +1,134 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background: #222327;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+nav {
+  padding: 0 50px;
+  height: 70px;
+  background: #fff;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+nav ul {
+  width: 500px;
+  height: 100%;
+  display: flex;
+}
+nav ul li {
+  position: relative;
+  width: 20%;
+  height: 100%;
+  list-style: none;
+}
+
+nav ul li a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+nav ul li a .icon {
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  transition: 0.3s;
+  color: #000;
+  z-index: 1;
+}
+nav ul li.active a .icon {
+  color: #2196f3;
+  transform: translateY(-40px);
+}
+nav ul li a .text {
+  position: absolute;
+  background: #2196f3;
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 14px;
+  transition: 0.5s;
+  opacity: 0;
+  transform: translateY(12px);
+}
+nav ul li.active a .text {
+  transform: translateY(0);
+  opacity: 1;
+  z-index: 1;
+}
+.indicator {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: #fff;
+  border-radius: 50%;
+  top: -63%;
+  transition: 0.5s;
+}
+
+.indicator::before {
+  content: "";
+  display: block;
+  width: 30%;
+  height: 30%;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 30% 30% white;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: inset -17px -15px 0px 0px white;
+  border-radius: 50%;
+  position: absolute;
+  top: 30%;
+  left: -9%;
+}
+
+.indicator::after {
+  content: "";
+  display: block;
+  width: 30%;
+  height: 30%;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 30% 30% white;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: inset 17px -15px 0px 0px white;
+  border-radius: 50%;
+  position: absolute;
+  top: 30%;
+  right: -9%;
+}
+nav ul li:nth-child(1).active ~ .indicator {
+  transform: translateX(0);
+}
+
+nav ul li:nth-child(2).active ~ .indicator {
+  transform: translateX(100px);
+}
+
+nav ul li:nth-child(3).active ~ .indicator {
+  transform: translateX(200px);
+}
+
+nav ul li:nth-child(4).active ~ .indicator {
+  transform: translateX(300px);
+}
+
+nav ul li:nth-child(5).active ~ .indicator {
+  transform: translateX(400px);
+}
