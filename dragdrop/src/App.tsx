@@ -20,7 +20,7 @@ const App: React.FC = () => {
   };
   const handleDragEnter = (
     idx: number,
-    event: React.DragEvent<HTMLDivElement>
+    event: React.DragEvent<HTMLDivElement>,
   ) => {
     setSquareDatas((prev) => {
       colorBoxRef.current = prev;
@@ -32,31 +32,56 @@ const App: React.FC = () => {
         ];
       if (typeof dragging === "number" && idx > dragging)
         return [
-          ...prev.slice(0, idx - 1),
+          ...prev.slice(0, idx + 1),
           { color: "transparent" },
-          ...prev.slice(idx - 1),
+          ...prev.slice(idx + 1),
         ];
       return prev;
     });
   };
 
   const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+    console.log(colorBoxRef.current);
     setSquareDatas([...colorBoxRef.current]);
   };
   const handledrop = (
     event: React.DragEvent<HTMLDivElement>,
-    thisIdx: number
+    thisIdx: number,
   ) => {
-    // setSquareDatas([...colorBoxRef.current]);
-    const changeColor = squareDates[(dragging as number) + 1];
-    const newSquare = squareDates.filter(
-      (_, idx) => idx !== (typeof dragging === "number" ? dragging : 0) + 1
-    );
-    newSquare[thisIdx] = changeColor;
-    colorBoxRef.current = newSquare;
-    setSquareDatas(newSquare);
-    setDragging(null);
+    let changeColor: { color: string };
+    let newSquare: typeof changeColor[];
+    console.log(dragging);
+    if (typeof dragging === "number" && dragging >= thisIdx) {
+      changeColor = squareDates[(dragging as number) + 1];
+      newSquare = squareDates.filter(
+        (_, idx) => idx !== (typeof dragging === "number" ? dragging : 0) + 1,
+      );
+
+      newSquare[thisIdx] = changeColor;
+      colorBoxRef.current = newSquare;
+      setSquareDatas(newSquare);
+      setDragging(null);
+    } else if (typeof dragging === "number") {
+      changeColor = squareDates[dragging as number];
+      newSquare = squareDates.filter(
+        (_, idx) =>
+          idx !== (typeof dragging === "number" ? dragging : 0) &&
+          _ !== undefined,
+      );
+      console.log(thisIdx);
+      newSquare[thisIdx] = changeColor;
+      console.log("new", newSquare);
+      console.log(newSquare.length - 1, colorBoxRef.current);
+      if (newSquare.length > colorBoxRef.current.length) {
+        newSquare = newSquare.filter((_, idx) => idx !== newSquare.length - 2);
+      }
+      colorBoxRef.current = newSquare;
+      setSquareDatas(newSquare);
+      setDragging(null);
+    }
+    console.log(dragging, thisIdx);
   };
+  console.log(squareDates);
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
@@ -69,7 +94,7 @@ const App: React.FC = () => {
       </form>
 
       <section style={{ marginTop: "20px" }}>
-        {squareDates.map((el, idx) => (
+        {[...squareDates, { color: "transparent" }].map((el, idx) => (
           <div
             draggable
             style={{
